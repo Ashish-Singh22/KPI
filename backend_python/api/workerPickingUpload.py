@@ -4,7 +4,7 @@ from .worker_picker_kpi import process_worker_file  # Import from your file
 
 workerPickingUpload_bp = Blueprint('workerPickingUpload_bp', __name__)
 
-@workerPickingUpload_bp.route('/workerPickingUpload', methods=['POST'])
+@workerPickingUpload_bp.route('/worker-picking', methods=['POST'])
 def calculate_workerPickingUpload():
     try:
         if 'file' not in request.files:
