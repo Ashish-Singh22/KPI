@@ -6,7 +6,7 @@ const SummaryApiPython = {
     method: "post",
   },
   workerPickingUpload: {
-    url: `${backendDomain}/api/workerPickingUpload`,
+    url: `${backendDomain}/api/worker-picking`,
     method: "post",
   },
   workerPackingUpload: {
