@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 
 const app = express()
 app.use(cors({
-    origin : "http://localhost:5173",
+    origin : "https://kpi-ft5w.onrender.com",
     credentials : true
 }))
 app.use(express.json({limit : '10mb'}));
