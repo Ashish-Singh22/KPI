@@ -19,6 +19,20 @@ const UploadInventory = () => {
 
   const scheduleInputRef = useRef(null);
   const exceptionInputRef = useRef(null);
+  const month_dict = {
+    "1":"January",
+    "2":"February",
+    "3":"March",
+    "4":"April",
+    "5":"May",
+    "6":"June",
+    "7":"July",
+    "8":"August",
+    "9":"September",
+    "10":"October",
+    "11":"November",
+    "12":"December"
+  }
 
   const weeks = Array.from({ length: 4 }, (_, i) => ({
     value: i + 1,
@@ -405,7 +419,9 @@ const UploadInventory = () => {
         {/* Results Section */}
         {processedData && (
           <div className="mt-8">
-            <UploadInventoryShow inventoryData={processedData} inputValue={inputValue} organization={selectedOrganization} />
+            <UploadInventoryShow inventoryData={processedData} inputValue={inputValue} organization={selectedOrganization} 
+            month = {month_dict[selectedMonth]}
+            week = {selectedWeek}/>
           </div>
         )}
       </div>

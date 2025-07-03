@@ -1,5 +1,6 @@
 # worker_picker_kpi.py
 import pandas as pd
+import numpy as np
 
 def process_worker_file(file_stream):
     try:      
@@ -684,6 +685,7 @@ def process_worker_file(file_stream):
           # Convert 'User Task Type' column from set to list if it exists
           if "User Task Type" in df.columns:
               df["User Task Type"] = df["User Task Type"].apply(lambda x: list(x) if isinstance(x, set) else x)
+          df = df.replace({np.nan: 0})
 
           record = {
               "date": entry["date"].strftime("%Y-%m-%d"),  # Convert date to string

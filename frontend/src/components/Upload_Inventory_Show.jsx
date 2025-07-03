@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
 
-const UploadInventoryShow = ({ inventoryData , inputValue , organization }) => {
+const UploadInventoryShow = ({ inventoryData , inputValue , organization,month , week }) => {
   // Sample data structure based on your input
   console.log(inputValue,organization)
   const data = {
@@ -139,11 +139,11 @@ useEffect(() => {
           <div className="flex justify-center items-center space-x-6 text-lg">
             <div className="bg-white rounded-full px-6 py-2 shadow-md">
               <span className="text-gray-600">Month:</span>
-              <span className="font-semibold text-blue-600 ml-2">3</span>
+              <span className="font-semibold text-blue-600 ml-2">{month}</span>
             </div>
             <div className="bg-white rounded-full px-6 py-2 shadow-md">
               <span className="text-gray-600">Week:</span>
-              <span className="font-semibold text-purple-600 ml-2">1</span>
+              <span className="font-semibold text-purple-600 ml-2">{week}</span>
             </div>
           </div>
         </div>
