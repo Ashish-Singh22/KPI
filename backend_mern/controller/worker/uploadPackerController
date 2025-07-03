@@ -1,0 +1,29 @@
+const packerModel = require('../../models/packerModel'); // adjust path if needed
+
+const uploadPackerController = async (req, res) => {
+  try {
+    const data = req.body;
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return res.status(400).json({ message: "No records provided in 'data'" });
+    }
+
+    // Insert each record as a separate document
+    const insertedRecords = await packerModel.insertMany(data);
+
+    res.status(200).json({
+      message: "packer records uploaded successfully",
+      success: true,
+      error: false,
+      insertedCount: insertedRecords.length
+    });
+  } catch (error) {
+    console.error("Error uploading packer records:", error);
+    res.status(500).json({ message: "Internal server error" || error.message ,
+     success: true,
+     error: false,
+    });
+  }
+};
+
+module.exports = uploadPackerController;
