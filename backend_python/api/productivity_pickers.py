@@ -112,6 +112,13 @@ def process_picker_file(file_stream):
                                 q.append(timestamp)
                             else:
                                 fr_t += (timestamp - q[-1]).total_seconds()
+                                q.append(timestamp)
+                        else:
+                            if not q:
+                                fr_t += (timestamp - l_d_t).total_seconds()
+                                q.append(timestamp)
+                            else:
+                                q.append(timestamp)
                     elif event_type == "load":
                         if l_d_t is None:
                             if not q:
