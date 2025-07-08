@@ -86,15 +86,16 @@ const DpmoPerformance = ({ data }) => {
   const barChartData = prepareBarChartData();
 
   const formatValue = (value, metric) => {
-    if (metric === "t_claim_value") {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2
-      }).format(value);
-    }
-    return value?.toLocaleString() || 0;
-  };
+  if (metric === "t_claim_value") {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 2
+    }).format(value);
+  }
+  return value?.toLocaleString('en-IN') || 0;
+};
+
 
   const getMetricLabel = (metric) => {
     switch(metric) {
@@ -134,12 +135,12 @@ const DpmoPerformance = ({ data }) => {
           
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h3 className="text-sm font-medium text-gray-500 uppercase">Claim Value</h3>
-            <p className="text-lg font-bold text-red-600">${data.t_claim_value?.toLocaleString()}</p>
+            <p className="text-lg font-bold text-red-600">{(data.t_claim_value/10000000)?.toLocaleString()} Cr.</p>
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h3 className="text-sm font-medium text-gray-500 uppercase">Accepted Value</h3>
-            <p className="text-lg font-bold text-emerald-600">${data.t_accepted_claim_value?.toLocaleString()}</p>
+            <p className="text-lg font-bold text-emerald-600">{(data.t_accepted_claim_value/10000000)?.toLocaleString()}Cr.</p>
           </div>
         </div>
 
