@@ -12,12 +12,10 @@ const allowedOrigins = ["https://kpi-ft5w.onrender.com"];
 
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like mobile apps or curl)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
         } else {
-            return callback(new Error("Not allowed by CORS"));
+            callback(new Error("Not allowed by CORS"));
         }
     },
     credentials: true,
@@ -25,7 +23,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Preflight requests for all routes
+// Preflight support
 app.options("*", cors({
     origin: "https://kpi-ft5w.onrender.com",
     credentials: true,
@@ -43,7 +41,6 @@ const PORT = process.env.PORT || 8080;
 
 connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log("Connected to DB");
-        console.log(`Server is running on port ${PORT}`);
+        console.log(`✅ Server running on port ${PORT}`);
     });
 });
