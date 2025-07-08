@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Upload, FileSpreadsheet, CheckCircle, AlertCircle, Loader } from "lucide-react";
 import SummaryApiPython from "../common/index_python";
+import { toast } from "react-toastify";
+import openDnPerformance from "./openDnPerformance";
+import OpenDnPerformance from "./openDnPerformance";
 
 const OpenDn = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('idle'); // idle, uploading, success, error
   const [responseData, setResponseData] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [data,setData]= useState({});
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -54,6 +58,14 @@ const OpenDn = () => {
       
         if (dataResponse.success) {
             toast.success(dataResponse?.message || "Upload successful");
+            setData({
+              p_d : dataResponse?.p_d || {},
+              f_d : dataResponse?.f_d || {},
+              h_d : dataResponse?.h_d || {},
+              final_data : dataResponse?.final_data
+            })
+            setUploadStatus('success'); 
+            console.log(dataResponse)
 
         } else {
             throw new Error(dataResponse?.message || "Upload failed");
@@ -236,6 +248,10 @@ const OpenDn = () => {
           </div>
         </div>
       </div>
+
+
+      {data && <OpenDnPerformance p_d = {data?.p_d} f_d = {data?.f_d} h_d = {data?.h_d}/>}
+
     </div>
   );
 };

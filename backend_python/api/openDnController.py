@@ -1,6 +1,6 @@
-# blueprint file (e.g., worker_upload.py)
+# blueprint file (e.g.,_openDn_upload.py)
 from flask import Blueprint, request, jsonify
-from .worker_picker_kpi import process_worker_file  # Import from your file
+from .opendn import process_openDn_file  # Import from your file
 
 openDnController_bp = Blueprint('openDnController_bp', __name__)
 
@@ -15,8 +15,8 @@ def calculate_openDnController():
         if file.filename == '':
             return jsonify({'success': False, 'message': 'No file selected'})
 
-        # Pass the file stream to the worker_picker_kpi function
-        result = process_worker_file(file)
+        # Pass the file stream to the_openDn_picker_kpi function
+        result = process_openDn_file(file)
 
         return jsonify(result)
     

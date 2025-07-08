@@ -120,11 +120,14 @@ def process_worker_file(file_stream):
               if(row["Employee"] == i["Employee"]):
                 ob["load_data"].iat[x,hour] += 1
                 ob["load_data"].iat[x,-2] += 1
-                i["User Task Type"].add(task)
+                if(task in i["User Task Type"]):
+                  i["User Task Type"][task] += 1
+                else:
+                  i["User Task Type"][task] = 1
                 p=1
                 break
             if(p==0):
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 if(6 <= h < 14):
@@ -139,7 +142,7 @@ def process_worker_file(file_stream):
                 break
         if p==0:
           if 6 <= h < 14:
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 new_df = pd.DataFrame([new_row], columns=columns_s1)
@@ -153,7 +156,7 @@ def process_worker_file(file_stream):
                 p=1
           else:
             if 14<=h<22:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] +=1  # +1 because column index 0 is 'Employee'
               new_row[-2] +=1
               new_df = pd.DataFrame([new_row], columns=columns_s2)
@@ -166,7 +169,7 @@ def process_worker_file(file_stream):
                   "load_data":db_s2})
               p=1
             else:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] +=1  # +1 because column index 0 is 'Employee'
               new_row[-2] +=1
               new_df = pd.DataFrame([new_row], columns=columns_s3)
@@ -213,11 +216,14 @@ def process_worker_file(file_stream):
               if(row["Employee"] == i["Employee"]):
                 ob["load_data"].iat[x,hour] += row["Quantity"]
                 ob["load_data"].iat[x,-2] += row["Quantity"]
-                i["User Task Type"].add(task)
+                if(task in i["User Task Type"]):
+                  i["User Task Type"][task] += 1
+                else:
+                  i["User Task Type"][task] = 1
                 p=1
                 break
             if(p==0):
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
                 new_row[-2] += row["Quantity"]
                 if(6 <= h < 14):
@@ -232,7 +238,7 @@ def process_worker_file(file_stream):
                 break
         if p==0:
           if 6 <= h < 14:
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
                 new_row[-2] += row["Quantity"]
                 new_df = pd.DataFrame([new_row], columns=columns_s1)
@@ -246,7 +252,7 @@ def process_worker_file(file_stream):
                 p=1
           else:
             if 14<=h<22:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
               new_row[-2] += row["Quantity"]
               new_df = pd.DataFrame([new_row], columns=columns_s2)
@@ -259,7 +265,7 @@ def process_worker_file(file_stream):
                   "load_data":db_s2})
               p=1
             else:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
               new_row[-2] += row["Quantity"]
               new_df = pd.DataFrame([new_row], columns=columns_s3)
@@ -305,11 +311,14 @@ def process_worker_file(file_stream):
               if(row["Employee"] == i["Employee"]):
                 ob["load_data"].iat[x,hour] += 1
                 ob["load_data"].iat[x,-2] += 1
-                i["User Task Type"].add(task)
+                if(task in i["User Task Type"]):
+                  i["User Task Type"][task] += 1
+                else:
+                  i["User Task Type"][task] = 1
                 p=1
                 break
             if(p==0):
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 if(6 <= h < 14):
@@ -324,7 +333,7 @@ def process_worker_file(file_stream):
                 break
         if p==0:
           if 6 <= h < 14:
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 new_df = pd.DataFrame([new_row], columns=columns_s1)
@@ -338,7 +347,7 @@ def process_worker_file(file_stream):
                 p=1
           else:
             if 14<=h<22:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += 1  # +1 because column index 0 is 'Employee'
               new_row[-2] += 1
               new_df = pd.DataFrame([new_row], columns=columns_s2)
@@ -351,7 +360,7 @@ def process_worker_file(file_stream):
                   "load_data":db_s2})
               p=1
             else:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += 1  # +1 because column index 0 is 'Employee'
               new_row[-2] += 1
               new_df = pd.DataFrame([new_row], columns=columns_s3)
@@ -402,11 +411,14 @@ def process_worker_file(file_stream):
               if(row["Employee"] == i["Employee"]):
                 ob["load_data"].iat[x,hour] += 1
                 ob["load_data"].iat[x,-2] += 1
-                i["User Task Type"].add(task)
+                if(task in i["User Task Type"]):
+                  i["User Task Type"][task] += 1
+                else:
+                  i["User Task Type"][task] = 1
                 p=1
                 break
             if(p==0):
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 if(6 <= h < 14):
@@ -421,7 +433,7 @@ def process_worker_file(file_stream):
                 break
         if p==0:
           if 6 <= h < 14:
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 new_df = pd.DataFrame([new_row], columns=columns_s1)
@@ -435,7 +447,7 @@ def process_worker_file(file_stream):
                 p=1
           else:
             if 14<=h<22:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] +=1  # +1 because column index 0 is 'Employee'
               new_row[-2] +=1
               new_df = pd.DataFrame([new_row], columns=columns_s2)
@@ -448,7 +460,7 @@ def process_worker_file(file_stream):
                   "load_data":db_s2})
               p=1
             else:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] +=1  # +1 because column index 0 is 'Employee'
               new_row[-2] +=1
               new_df = pd.DataFrame([new_row], columns=columns_s3)
@@ -495,11 +507,14 @@ def process_worker_file(file_stream):
               if(row["Employee"] == i["Employee"]):
                 ob["load_data"].iat[x,hour] += row["Quantity"]
                 ob["load_data"].iat[x,-2] += row["Quantity"]
-                i["User Task Type"].add(task)
+                if(task in i["User Task Type"]):
+                  i["User Task Type"][task] += 1
+                else:
+                  i["User Task Type"][task] = 1
                 p=1
                 break
             if(p==0):
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
                 new_row[-2] += row["Quantity"]
                 if(6 <= h < 14):
@@ -514,7 +529,7 @@ def process_worker_file(file_stream):
                 break
         if p==0:
           if 6 <= h < 14:
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
                 new_row[-2] += row["Quantity"]
                 new_df = pd.DataFrame([new_row], columns=columns_s1)
@@ -528,7 +543,7 @@ def process_worker_file(file_stream):
                 p=1
           else:
             if 14<=h<22:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
               new_row[-2] += row["Quantity"]
               new_df = pd.DataFrame([new_row], columns=columns_s2)
@@ -541,7 +556,7 @@ def process_worker_file(file_stream):
                   "load_data":db_s2})
               p=1
             else:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += row["Quantity"]  # +1 because column index 0 is 'Employee'
               new_row[-2] += row["Quantity"]
               new_df = pd.DataFrame([new_row], columns=columns_s3)
@@ -587,11 +602,14 @@ def process_worker_file(file_stream):
               if(row["Employee"] == i["Employee"]):
                 ob["load_data"].iat[x,hour] += 1
                 ob["load_data"].iat[x,-2] += 1
-                i["User Task Type"].add(task)
+                if(task in i["User Task Type"]):
+                  i["User Task Type"][task] += 1
+                else:
+                  i["User Task Type"][task] = 1
                 p=1
                 break
             if(p==0):
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 if(6 <= h < 14):
@@ -606,7 +624,7 @@ def process_worker_file(file_stream):
                 break
         if p==0:
           if 6 <= h < 14:
-                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+                new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
                 new_row[hour] += 1  # +1 because column index 0 is 'Employee'
                 new_row[-2] += 1
                 new_df = pd.DataFrame([new_row], columns=columns_s1)
@@ -620,7 +638,7 @@ def process_worker_file(file_stream):
                 p=1
           else:
             if 14<=h<22:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += 1  # +1 because column index 0 is 'Employee'
               new_row[-2] += 1
               new_df = pd.DataFrame([new_row], columns=columns_s2)
@@ -633,7 +651,7 @@ def process_worker_file(file_stream):
                   "load_data":db_s2})
               p=1
             else:
-              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,set(task)]
+              new_row = [row["Employee"], 0, 0, 0, 0, 0, 0, 0, 0, 0,{ task : 1 }]
               new_row[hour] += 1  # +1 because column index 0 is 'Employee'
               new_row[-2] += 1
               new_df = pd.DataFrame([new_row], columns=columns_s3)
@@ -682,11 +700,7 @@ def process_worker_file(file_stream):
       for entry in data:
           df = entry["load_data"].copy()
 
-          # Convert 'User Task Type' column from set to list if it exists
-          if "User Task Type" in df.columns:
-              df["User Task Type"] = df["User Task Type"].apply(lambda x: list(x) if isinstance(x, set) else x)
           df = df.replace({np.nan: 0})
-
           record = {
               "date": entry["date"].strftime("%Y-%m-%d"),  # Convert date to string
               "shift": entry["shift"],

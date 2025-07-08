@@ -111,11 +111,11 @@ def process_picker_file(file_stream):
                                 fr_t += (timestamp - st_t).total_seconds()
                                 q.append(timestamp)
                             else:
-                                fr_t += (timestamp - q[-1]).total_seconds()
                                 q.append(timestamp)
                         else:
                             if not q:
                                 fr_t += (timestamp - l_d_t).total_seconds()
+                                l_d_t = timestamp
                                 q.append(timestamp)
                             else:
                                 q.append(timestamp)
@@ -137,6 +137,7 @@ def process_picker_file(file_stream):
                                 q.pop()
                         else:
                             d_t += (timestamp - l_d_t).total_seconds()
+                            q.pop()
                         l_d_t = timestamp
 
                 # Convert to hours

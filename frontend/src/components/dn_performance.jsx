@@ -211,7 +211,7 @@ const formatMetricName = (metric) => {
 
   {/* Scrollable Bar Chart Container */}
   <div className="overflow-x-auto">
-    <div style={{ width: `${Math.max(barChartData.length * 80, 700)}px`, height: '400px' }}>
+    <div style={{ width: `${Math.max(barChartData.length * 80, 1000)}px`, height: '400px' }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={barChartData}

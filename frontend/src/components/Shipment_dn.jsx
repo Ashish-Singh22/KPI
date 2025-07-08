@@ -9,7 +9,7 @@ const Shipment = () => {
   const [shipmentData, setShipmentData] = useState([]);
   const [currentFilters, setCurrentFilters] = useState(null);
   const [data,setData] = useState({})
-  const name_list = ["dn_count","t_hour","t_quantity","t_item","t_dn_value"] 
+  const name_list = ["dn_count","total_hour","total_quantity","total_item","total_dn_value"] 
 
   const organizationList = ["D9M", "AC1", "AM2", "D9N"];
 

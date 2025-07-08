@@ -18,7 +18,6 @@ const UploadPage = () => {
     dpmo: { file: null, uploading: false, success: false, error: null },
     dnShipment: { file: null, uploading: false, success: false, error: null },
     dnProductivity: { file: null, uploading: false, success: false, error: null },
-    fsfFaf: { file: null, uploading: false, success: false, error: null },
     productivityPicking : { file: null, uploading: false, success: false, error: null },
   });
 
@@ -72,16 +71,6 @@ const UploadPage = () => {
       method: SummaryApiPython.dnProductivityUpload.method,
       mernEndpoint: SummaryApi.dnProductivityUpload.url,
       mernMethod: SummaryApi.dnProductivityUpload.method
-    },
-    {
-      key: 'fsfFaf',
-      title: 'FSF/FAF Report',
-      description: 'Upload FSF and FAF performance data',
-      acceptedTypes: '.csv,.xlsx,.xls',
-      endpoint: SummaryApiPython.fsfFafUpload.url,
-      method: SummaryApiPython.fsfFafUpload.method,
-      mernEndpoint: SummaryApi.fsfFafUpload.url,
-      mernMethod: SummaryApi.fsfFafUpload.method
     },
     {
       key: 'productivityPicking',
@@ -140,7 +129,7 @@ const UploadPage = () => {
       });
 
       const dataResponse = await response.json();
-    //   console.log(dataResponse)
+      console.log(dataResponse)
 
       if (dataResponse.success) {
         toast.success(dataResponse?.message || "Upload successful");

@@ -45,10 +45,10 @@ def process_Dn_file(name,uploaded_data, filter_data):
       if(name == "Shipment"):
           final_data = {
               "dn_count":0,
-              "t_hour":0,
-              "t_quantity":0,
-              "t_item":0,
-              "t_dn_value":0,
+              "total_hour":0,
+              "total_quantity":0,
+              "total_item":0,
+              "total_dn_value":0,
               "load_data":{},
               "priority_data":{}
           }
@@ -56,10 +56,10 @@ def process_Dn_file(name,uploaded_data, filter_data):
             print("1")
             for ob in data:
               final_data["dn_count"] += ob["dn_count"]
-              final_data["t_hour"] += ob["t_hour"]
-              final_data["t_quantity"] += ob["t_quantity"]
-              final_data["t_item"] += ob["t_item"]
-              final_data["t_dn_value"] += ob["t_dn_value"]
+              final_data["total_hour"] += ob["total_hour"]
+              final_data["total_quantity"] += ob["total_quantity"]
+              final_data["total_item"] += ob["total_item"]
+              final_data["total_dn_value"] += ob["total_dn_value"]
               final_data["load_data"][ob["date"]] = {}
               for key,value in ob["ship_priority"].items():
                 if (key in final_data["load_data"][ob["date"]]):
@@ -82,10 +82,10 @@ def process_Dn_file(name,uploaded_data, filter_data):
             print("2")
             for ob in data:
               final_data["dn_count"] += ob["dn_count"]
-              final_data["t_hour"] += ob["t_hour"]
-              final_data["t_quantity"] += ob["t_quantity"]
-              final_data["t_item"] += ob["t_item"]
-              final_data["t_dn_value"] += ob["t_dn_value"]
+              final_data["total_hour"] += ob["total_hour"]
+              final_data["total_quantity"] += ob["total_quantity"]
+              final_data["total_item"] += ob["total_item"]
+              final_data["total_dn_value"] += ob["total_dn_value"]
               final_data["load_data"][ob["date"]] = {}
               for key,value in ob["ship_priority"].items():
                 if (key in final_data["load_data"][ob["date"]]):
@@ -108,10 +108,10 @@ def process_Dn_file(name,uploaded_data, filter_data):
             print("3")
             for ob in data:
               final_data["dn_count"] += ob["dn_count"]
-              final_data["t_hour"] += ob["t_hour"]
-              final_data["t_quantity"] += ob["t_quantity"]
-              final_data["t_item"] += ob["t_item"]
-              final_data["t_dn_value"] += ob["t_dn_value"]
+              final_data["total_hour"] += ob["total_hour"]
+              final_data["total_quantity"] += ob["total_quantity"]
+              final_data["total_item"] += ob["total_item"]
+              final_data["total_dn_value"] += ob["total_dn_value"]
               curr_week = (((datetime.strptime(ob["date"], "%Y-%m-%d")).date()- start.date()).days // 7) + 1
               week_key = f"Week {int(curr_week)}"
               final_data["load_data"][week_key] = {}
@@ -136,10 +136,10 @@ def process_Dn_file(name,uploaded_data, filter_data):
             print("4")
             for ob in data:
               final_data["dn_count"] += ob["dn_count"]
-              final_data["t_hour"] += ob["t_hour"]
-              final_data["t_quantity"] += ob["t_quantity"]
-              final_data["t_item"] += ob["t_item"]
-              final_data["t_dn_value"] += ob["t_dn_value"]
+              final_data["total_hour"] += ob["total_hour"]
+              final_data["total_quantity"] += ob["total_quantity"]
+              final_data["total_item"] += ob["total_item"]
+              final_data["total_dn_value"] += ob["total_dn_value"]
               curr_mon = (((datetime.strptime(ob["date"], "%Y-%m-%d")).date() - start.date()).days // 30) + 1
               mon_key = f"mon {int(curr_mon)}"
               final_data["load_data"][mon_key] = {}
@@ -163,12 +163,12 @@ def process_Dn_file(name,uploaded_data, filter_data):
       else:
         final_data = {
               "dn_count":0,
-              "t_c_to_pic_hour":0,
-              "t_pic_to_pac_hour":0,
-              "t_pac_to_inv_hour":0,
-              "t_quantity":0,
-              "t_lines":0,
-              "t_dn_value":0,
+              "total_through_put_to_pic_hour":0,
+              "total_pic_to_pac_hour":0,
+              "total_pac_to_inv_hour":0,
+              "total_quantity":0,
+              "total_lines":0,
+              "total_dn_value":0,
               "load_data":{},#3
               "priority_data":{}
           }
@@ -176,12 +176,12 @@ def process_Dn_file(name,uploaded_data, filter_data):
           print("5")
           for ob in data:
             final_data["dn_count"] += ob["dn_count"]
-            final_data["t_c_to_pic_hour"] += ob["t_c_to_pic_hour"]
-            final_data["t_pic_to_pac_hour"] += ob["t_pic_to_pac_hour"]
-            final_data["t_pac_to_inv_hour"] += ob["t_pac_to_inv_hour"]
-            final_data["t_quantity"] += ob["t_quantity"]
-            final_data["t_lines"] += ob["t_lines"]
-            final_data["t_dn_value"] += ob["t_dn_value"]
+            final_data["total_through_put_to_pic_hour"] += ob["total_through_put_to_pic_hour"]
+            final_data["total_pic_to_pac_hour"] += ob["total_pic_to_pac_hour"]
+            final_data["total_pac_to_inv_hour"] += ob["total_pac_to_inv_hour"]
+            final_data["total_quantity"] += ob["total_quantity"]
+            final_data["total_lines"] += ob["total_lines"]
+            final_data["total_dn_value"] += ob["total_dn_value"]
             final_data["load_data"][ob["date"]] = {}
             for key,value in ob["ship_priority"].items():
               if (key in final_data["load_data"][ob["date"]]):
@@ -208,12 +208,12 @@ def process_Dn_file(name,uploaded_data, filter_data):
           print("6")
           for ob in data:
             final_data["dn_count"] += ob["dn_count"]
-            final_data["t_c_to_pic_hour"] += ob["t_c_to_pic_hour"]
-            final_data["t_pic_to_pac_hour"] += ob["t_pic_to_pac_hour"]
-            final_data["t_pac_to_inv_hour"] += ob["t_pac_to_inv_hour"]
-            final_data["t_quantity"] += ob["t_quantity"]
-            final_data["t_lines"] += ob["t_lines"]
-            final_data["t_dn_value"] += ob["t_dn_value"]
+            final_data["total_through_put_to_pic_hour"] += ob["total_through_put_to_pic_hour"]
+            final_data["total_pic_to_pac_hour"] += ob["total_pic_to_pac_hour"]
+            final_data["total_pac_to_inv_hour"] += ob["total_pac_to_inv_hour"]
+            final_data["total_quantity"] += ob["total_quantity"]
+            final_data["total_lines"] += ob["total_lines"]
+            final_data["total_dn_value"] += ob["total_dn_value"]
             final_data["load_data"][ob["date"]] = {}
             for key,value in ob["ship_priority"].items():
               if (key in final_data["load_data"][ob["date"]]):
@@ -240,12 +240,12 @@ def process_Dn_file(name,uploaded_data, filter_data):
           print("7")
           for ob in data:
             final_data["dn_count"] += ob["dn_count"]
-            final_data["t_c_to_pic_hour"] += ob["t_c_to_pic_hour"]
-            final_data["t_pic_to_pac_hour"] += ob["t_pic_to_pac_hour"]
-            final_data["t_pac_to_inv_hour"] += ob["t_pac_to_inv_hour"]
-            final_data["t_quantity"] += ob["t_quantity"]
-            final_data["t_lines"] += ob["t_lines"]
-            final_data["t_dn_value"] += ob["t_dn_value"]
+            final_data["total_through_put_to_pic_hour"] += ob["total_through_put_to_pic_hour"]
+            final_data["total_pic_to_pac_hour"] += ob["total_pic_to_pac_hour"]
+            final_data["total_pac_to_inv_hour"] += ob["total_pac_to_inv_hour"]
+            final_data["total_quantity"] += ob["total_quantity"]
+            final_data["total_lines"] += ob["total_lines"]
+            final_data["total_dn_value"] += ob["total_dn_value"]
             curr_week = (((datetime.strptime(ob["date"], "%Y-%m-%d")).date() - start.date()).days // 7) + 1
             week_key = f"Week {int(curr_week)}"
             final_data["load_data"][week_key] = {}
@@ -274,12 +274,12 @@ def process_Dn_file(name,uploaded_data, filter_data):
           print("8")
           for ob in data:
             final_data["dn_count"] += ob["dn_count"]
-            final_data["t_c_to_pic_hour"] += ob["t_c_to_pic_hour"]
-            final_data["t_pic_to_pac_hour"] += ob["t_pic_to_pac_hour"]
-            final_data["t_pac_to_inv_hour"] += ob["t_pac_to_inv_hour"]
-            final_data["t_quantity"] += ob["t_quantity"]
-            final_data["t_lines"] += ob["t_lines"]
-            final_data["t_dn_value"] += ob["t_dn_value"]
+            final_data["total_through_put_to_pic_hour"] += ob["total_through_put_to_pic_hour"]
+            final_data["total_pic_to_pac_hour"] += ob["total_pic_to_pac_hour"]
+            final_data["total_pac_to_inv_hour"] += ob["total_pac_to_inv_hour"]
+            final_data["total_quantity"] += ob["total_quantity"]
+            final_data["total_lines"] += ob["total_lines"]
+            final_data["total_dn_value"] += ob["total_dn_value"]
             curr_mon = (((datetime.strptime(ob["date"], "%Y-%m-%d")).date() - start.date()).days // 30) + 1
             mon_key = f"mon {int(curr_mon)}"
             final_data["load_data"][mon_key] = {}

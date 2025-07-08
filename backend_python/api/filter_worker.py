@@ -3,6 +3,8 @@ import json
 import pandas as pd
 from datetime import datetime
 from flask import send_file
+from collections import Counter
+
 
 def process_worker_file(name,uploaded_data, filter_data):
     try:
@@ -177,10 +179,6 @@ def process_worker_file(name,uploaded_data, filter_data):
 
             for record in uploaded_data:
                 df = pd.DataFrame(record["load_data"])
-                
-                # Convert 'User Task Type' column from list back to set, if it exists
-                if "User Task Type" in df.columns:
-                    df["User Task Type"] = df["User Task Type"].apply(lambda x: set(x) if isinstance(x, list) else x)
 
                 entry = {
                     "date": datetime.strptime(record["date"], "%Y-%m-%d"),  # Convert string to datetime
@@ -210,9 +208,9 @@ def process_worker_file(name,uploaded_data, filter_data):
                 for ob in data:
                     for idx, row in ob["load_data"].iterrows():
                         if row["Employee"] in vehicle_used:
-                            vehicle_used[row["Employee"]].update(row[-1])
+                            vehicle_used[row["Employee"]] = dict(Counter( vehicle_used[row["Employee"]]) + Counter(row[-1]))
                         else:
-                            vehicle_used[row["Employee"]] = set(row[-1])
+                            vehicle_used[row["Employee"]] = (row[-1])
                         for col in ob["load_data"].columns[1:-2]:  # skip Employee and Total
                             all_cols.add(str(col))
                             emp = row["Employee"]
@@ -229,9 +227,9 @@ def process_worker_file(name,uploaded_data, filter_data):
                 for ob in data:
                     for idx, row in ob["load_data"].iterrows():
                         if row["Employee"] in vehicle_used:
-                            vehicle_used[row["Employee"]].update(row[-1])
+                            vehicle_used[row["Employee"]] = dict(Counter( vehicle_used[row["Employee"]]) + Counter(row[-1]))
                         else:
-                            vehicle_used[row["Employee"]] = set(row[-1])
+                            vehicle_used[row["Employee"]] = (row[-1])
                         emp = row["Employee"]
                         col = str(ob["date"])
                         all_cols.add(col)
@@ -249,9 +247,9 @@ def process_worker_file(name,uploaded_data, filter_data):
                 for ob in data:
                     for idx, row in ob["load_data"].iterrows():
                         if row["Employee"] in vehicle_used:
-                            vehicle_used[row["Employee"]].update(row[-1])
+                            vehicle_used[row["Employee"]] = dict(Counter( vehicle_used[row["Employee"]]) + Counter(row[-1]))
                         else:
-                            vehicle_used[row["Employee"]] = set(row[-1])
+                            vehicle_used[row["Employee"]] = (row[-1])
                         emp = row["Employee"]
                         curr_week = (((ob["date"]).date() - start.date()).days // 7) + 1
                         week_key = f"Week {int(curr_week)}"
@@ -276,9 +274,9 @@ def process_worker_file(name,uploaded_data, filter_data):
                 for ob in data:
                     for idx, row in ob["load_data"].iterrows():
                         if row["Employee"] in vehicle_used:
-                            vehicle_used[row["Employee"]].update(row[-1])
+                            vehicle_used[row["Employee"]] = dict(Counter( vehicle_used[row["Employee"]]) + Counter(row[-1]))
                         else:
-                            vehicle_used[row["Employee"]] = set(row[-1])
+                            vehicle_used[row["Employee"]] = (row[-1])
                         emp = row["Employee"]
                         curr_month = (((ob["date"]).date() - start.date()).days // 30) + 1
                         month_key = f"Month {int(curr_month)}"
@@ -322,13 +320,14 @@ def process_worker_file(name,uploaded_data, filter_data):
             send_data = pd.DataFrame(records)
             
             vehicle_list = []
+
             for emp in send_data['Employee']:
                 vehicles = vehicle_used.get(emp, set())
-                vehicle_str = ', '.join(sorted(vehicles))  # convert set to string
-                vehicle_list.append(vehicle_str)
+                vehicle_list.append((emp, vehicles))  # Store as (key, value) tuple
 
-            # Insert the Vehicle Used column at the first position
+            # Insert the entire key-value pair list as the first column
             send_data.insert(1, 'Vehicle Used', vehicle_list)
+
 
             # Reset index to avoid index-related issues
             send_data.reset_index(drop=True, inplace=True)

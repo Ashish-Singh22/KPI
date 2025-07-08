@@ -45,16 +45,16 @@ def process_worker_file(file_stream):
           "dn_count":0,
           "ship_priority":{},
           "organization":None,
-          "t_c_to_pic_hour":0,
-          "t_pic_to_pac_hour":0,
-          "t_pac_to_inv_hour":0,
-          "t_quantity":0,
-          "t_lines":0,
-          "t_dn_value":0
+          "total_through_put_to_pic_hour":0,
+          "total_pic_to_pac_hour":0,
+          "total_pac_to_inv_hour":0,
+          "total_quantity":0,
+          "total_lines":0,
+          "total_dn_value":0
       }
       data=[]
 
-      # value=[dn_count,t_c_to_pic_hour,t_pic_to_pac_hour,t_pac_to_inv_hour,quantity,lines,dn_value]
+      # value=[dn_count,t_through_put_to_pic_hour,t_pic_to_pac_hour,t_pac_to_inv_hour,quantity,lines,dn_value]
 
       # 2. Function to insert obj["ship_priority"]
       def insert(new_obj,name, value):
@@ -72,32 +72,32 @@ def process_worker_file(file_stream):
 
       # # Convert seconds to decimal hours
       # ship_dn_data['HR_TAKEN'] = time_diff / 3600
-      # value=[dn_count,t_c_to_pic_hour,t_pic_to_pac_hour,t_pac_to_inv_hour,quantity,lines,dn_value]
+      # value=[dn_count,t_through_put_to_pic_hour,t_pic_to_pac_hour,t_pac_to_inv_hour,quantity,lines,dn_value]
 
       for index,row in productivity_data.iterrows():
-        t_c_to_pic_hour = (row['LOAD_OFF_DATE_MAX'] - row['DN_CREATION_DATE']).total_seconds() / 3600
-        t_pic_to_pac_hour = (row['STAGE_MOVE_DATE'] - row['LOAD_OFF_DATE_MAX']).total_seconds() / 3600
-        t_pac_to_inv_hour = (row['INVOICE_DATE_TIME'] - row['STAGE_MOVE_DATE']).total_seconds() / 3600
+        total_through_put_to_pic_hour = (row['LOAD_OFF_DATE_MAX'] - row['DN_CREATION_DATE']).total_seconds() / 3600
+        total_pic_to_pac_hour = (row['STAGE_MOVE_DATE'] - row['LOAD_OFF_DATE_MAX']).total_seconds() / 3600
+        total_pac_to_inv_hour = (row['INVOICE_DATE_TIME'] - row['STAGE_MOVE_DATE']).total_seconds() / 3600
         p=0
         for ob in data:
           if row['DN_CREATION_DATE'].date() == ob["date"] and row['ORGANIZATION_CODE'] == ob["organization"]:
               ob["dn_count"]+=1
-              ob["t_c_to_pic_hour"] += t_c_to_pic_hour
-              ob["t_pic_to_pac_hour"] += t_pic_to_pac_hour
-              ob["t_pac_to_inv_hour"] += t_pac_to_inv_hour
-              ob["t_quantity"] += row["HASH_QTY"]
-              ob["t_lines"]+=row["NO_OF_LINES"]
-              ob["t_dn_value"]+=row["DN_VALUE"]
+              ob["total_through_put_to_pic_hour"] += total_through_put_to_pic_hour
+              ob["total_pic_to_pac_hour"] += total_pic_to_pac_hour
+              ob["total_pac_to_inv_hour"] += total_pac_to_inv_hour
+              ob["total_quantity"] += row["HASH_QTY"]
+              ob["total_lines"]+=row["NO_OF_LINES"]
+              ob["total_dn_value"]+=row["DN_VALUE"]
               if (check(ob["ship_priority"],row["SHIPMENT_PRIORITY_CODE"])):
                 ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][0] += 1
-                ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][1] += t_c_to_pic_hour
-                ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][2] += t_pic_to_pac_hour
-                ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][3] += t_pac_to_inv_hour
+                ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][1] += total_through_put_to_pic_hour
+                ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][2] += total_pic_to_pac_hour
+                ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][3] += total_pac_to_inv_hour
                 ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][4] += row["HASH_QTY"]
                 ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][5] += row["NO_OF_LINES"]
                 ob["ship_priority"][row["SHIPMENT_PRIORITY_CODE"]][6] += row["DN_VALUE"]
               else:
-                insert(ob["ship_priority"],row["SHIPMENT_PRIORITY_CODE"],[1,t_c_to_pic_hour,t_pic_to_pac_hour,t_pac_to_inv_hour,row["HASH_QTY"],row["NO_OF_LINES"],row["DN_VALUE"]])
+                insert(ob["ship_priority"],row["SHIPMENT_PRIORITY_CODE"],[1,total_through_put_to_pic_hour,total_pic_to_pac_hour,total_pac_to_inv_hour,row["HASH_QTY"],row["NO_OF_LINES"],row["DN_VALUE"]])
               p=1
               break
 
@@ -105,14 +105,14 @@ def process_worker_file(file_stream):
           data.append({
                 "date": row['DN_CREATION_DATE'].date(),
                 "dn_count":1,
-                "ship_priority":{row["SHIPMENT_PRIORITY_CODE"]:[1,t_c_to_pic_hour,t_pic_to_pac_hour,t_pac_to_inv_hour,row["HASH_QTY"],row["NO_OF_LINES"],row["DN_VALUE"]]},
+                "ship_priority":{row["SHIPMENT_PRIORITY_CODE"]:[1,total_through_put_to_pic_hour,total_pic_to_pac_hour,total_pac_to_inv_hour,row["HASH_QTY"],row["NO_OF_LINES"],row["DN_VALUE"]]},
                 "organization":row["ORGANIZATION_CODE"],
-                "t_c_to_pic_hour":t_c_to_pic_hour,
-                "t_pic_to_pac_hour":t_pic_to_pac_hour,
-                "t_pac_to_inv_hour":t_pac_to_inv_hour,
-                "t_quantity":row["HASH_QTY"],
-                "t_lines":row["NO_OF_LINES"],
-                "t_dn_value":row["DN_VALUE"]
+                "total_through_put_to_pic_hour":total_through_put_to_pic_hour,
+                "total_pic_to_pac_hour":total_pic_to_pac_hour,
+                "total_pac_to_inv_hour":total_pac_to_inv_hour,
+                "total_quantity":row["HASH_QTY"],
+                "total_lines":row["NO_OF_LINES"],
+                "total_dn_value":row["DN_VALUE"]
 
             })
 
@@ -131,12 +131,12 @@ def process_worker_file(file_stream):
             "dn_count":entry["dn_count"],
             "ship_priority":entry["ship_priority"],
             "organization":entry["organization"],
-            "t_c_to_pic_hour":entry["t_c_to_pic_hour"],
-            "t_pic_to_pac_hour":entry["t_pic_to_pac_hour"],
-            "t_pac_to_inv_hour":entry["t_pac_to_inv_hour"],
-            "t_quantity":entry["t_quantity"],
-            "t_lines":entry["t_lines"],
-            "t_dn_value":entry["t_dn_value"]
+            "total_through_put_to_pic_hour":entry["total_through_put_to_pic_hour"],
+            "total_pic_to_pac_hour":entry["total_pic_to_pac_hour"],
+            "total_pac_to_inv_hour":entry["total_pac_to_inv_hour"],
+            "total_quantity":entry["total_quantity"],
+            "total_lines":entry["total_lines"],
+            "total_dn_value":entry["total_dn_value"]
         }
         ready_to_send.append(record)
       return {'success': True, 'data': ready_to_send}

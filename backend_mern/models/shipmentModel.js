@@ -18,19 +18,19 @@ date: {
     type: String,
     required: true,
   },
-  t_hour: {
+  total_hour: {
     type: Number,
     required: true,
   },
-  t_quantity: {
+  total_quantity: {
     type: Number,
     required: true,
   },
-  t_item: {
+  total_item: {
     type: Number,
     required: true,
   },
-  t_dn_value: {
+  total_dn_value: {
     type: Number,
     required: true,
   },

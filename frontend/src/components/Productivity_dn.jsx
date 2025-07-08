@@ -9,7 +9,7 @@ const Productivity = () => {
   const [productivityData, setProductivityData] = useState([]);
   const [currentFilters, setCurrentFilters] = useState(null);
   const [data,setData] = useState({})
-  const name_list = ["dn_count","t_c_to_pic_hour","t_pic_to_pac_hour","t_pac_to_inv_hour","t_quantity","t_lines","t_dn_value"] 
+  const name_list = ["dn_count","total_through_put_to_pic_hour","total_pic_to_pac_hour","total_pac_to_inv_hour","total_quantity","total_lines","total_dn_value"] 
 
   const organizationList = ["D9M", "AC1", "AM2", "D9N"];
 

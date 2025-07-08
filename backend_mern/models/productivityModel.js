@@ -18,27 +18,27 @@ date: {
     type: String,
     required: true,
   },
-  t_c_to_pic_hour: {
+  total_through_put_to_pic_hour: {
     type: Number,
     required: true,
   },
-  t_pic_to_pac_hour: {
+  total_pic_to_pac_hour: {
     type: Number,
     required: true,
   },
-  t_pac_to_inv_hour: {
+  total_pac_to_inv_hour: {
     type: Number,
     required: true,
   },
-  t_quantity: {
+  total_quantity: {
     type: Number,
     required: true,
   },
-  t_lines: {
+  total_lines: {
     type: Number,
     required: true,
   },
-  t_dn_value: {
+  total_dn_value: {
     type: Number,
     required: true,
   },

@@ -6,7 +6,7 @@ import SummaryApiPython from "../common/index_python";
 import WorkerPerformancePlotly from "./worker_performance";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import Productivity_Worker from "./Productivity_worker";
+import Productivity_Worker from "./productivity_worker";
 
 const Picker = () => {
   const [pickerData, setPickerData] = useState([]);

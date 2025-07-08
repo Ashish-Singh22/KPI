@@ -51,10 +51,10 @@ def process_worker_file(file_stream):
             "dn_count":0,
             "ship_priority":{},
             "organization":"D9M",
-            "t_hour":0,
-            "t_quantity":0,
-            "t_item":0,
-            "t_dn_value":0
+            "total_hour":0,
+            "total_quantity":0,
+            "total_item":0,
+            "total_dn_value":0
         }
 
         # Content LPN
@@ -76,10 +76,10 @@ def process_worker_file(file_stream):
 
         for index,row in ship_dn_data.iterrows():   
             obj["dn_count"]+=1
-            obj["t_hour"]+=row["HR_TAKEN"]
-            obj["t_quantity"]+=row["SHIPPED_QTY"]
-            obj["t_item"]+=row["ITEM_COUNT"]
-            obj["t_dn_value"]+=row["DN_VAL"]
+            obj["total_hour"]+=row["HR_TAKEN"]
+            obj["total_quantity"]+=row["SHIPPED_QTY"]
+            obj["total_item"]+=row["ITEM_COUNT"]
+            obj["total_dn_value"]+=row["DN_VAL"]
             if (check(row["SHIPMENT_PRIORITY"])):
                 obj["ship_priority"][row["SHIPMENT_PRIORITY"]][0] += 1
                 obj["ship_priority"][row["SHIPMENT_PRIORITY"]][1] += row["HR_TAKEN"]
@@ -94,10 +94,10 @@ def process_worker_file(file_stream):
             "dn_count":obj["dn_count"],
             "ship_priority":obj["ship_priority"],
             "organization":obj["organization"],
-            "t_hour":obj["t_hour"],
-            "t_quantity":obj['t_quantity'],
-            "t_item":obj['t_item'],
-            "t_dn_value":obj['t_dn_value']
+            "total_hour":obj["total_hour"],
+            "total_quantity":obj['total_quantity'],
+            "total_item":obj['total_item'],
+            "total_dn_value":obj['total_dn_value']
         }
         
         return {'success': True, 'data': obj}

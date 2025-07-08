@@ -9,7 +9,7 @@ const Footer = () => {
     { name: 'Worker Performance', href: '/worker' },
     { name: 'DN Reports', href: '/dn' },
     { name: 'DPMO Analysis', href: '/dpmo' },
-    { name: 'FSF/FAF Metrics', href: '/fsf_and_faf' },
+    { name: 'Inventory', href: '/inventory' },
     { name: 'Upload Data', href: '/upload' }
   ];
 
@@ -17,7 +17,7 @@ const Footer = () => {
     { icon: Users, name: 'Worker Analytics', description: 'Track picking & packing performance' },
     { icon: TrendingUp, name: 'DPMO Tracking', description: 'Monitor quality metrics' },
     { icon: FileText, name: 'DN Reports', description: 'Shipment & productivity insights' },
-    { icon: BarChart, name: 'FSF/FAF Analysis', description: 'Performance benchmarking' }
+    { icon: BarChart, name: 'Inventory', description: 'Inventory insights' }
   ];
 
   return (
@@ -119,11 +119,11 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row md:space-x-8 space-y-2 md:space-y-0 text-sm text-gray-300">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2 text-red-400" />
-                <span>analytics@company.com</span>
+                <span>thakurashishsingh2004@gmail.com</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2 text-red-400" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 7522052204</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2 text-red-400" />
