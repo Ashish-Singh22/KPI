@@ -7,27 +7,10 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-// CORS Configuration
-const allowedOrigins = ["https://kpi-ft5w.onrender.com"];
-
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
+    origin: true,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-// Preflight support
-app.options("*", cors({
-    origin: "https://kpi-ft5w.onrender.com",
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -41,6 +24,7 @@ const PORT = process.env.PORT || 8080;
 
 connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log(`✅ Server running on port ${PORT}`);
+        console.log("Connected to DB");
+        console.log(`Server is running on port ${PORT}`);
     });
 });
