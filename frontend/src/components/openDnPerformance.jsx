@@ -1,7 +1,7 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
 
-const OpenDnPerformance = ({ p_d, f_d, h_d }) => {
+const OpenDnPerformance = ({ p_d, f_d, h_d , final_data}) => {
   // Sample data for demonstration
  const samplePartsData = {
     'D9M': {
@@ -717,6 +717,23 @@ const downloadIndividualSheet = (sheetType) => {
   }
 };
 
+const downloadOpenDnDataSheet = () => {
+  if (!final_data || final_data.length === 0) {
+    console.error("No data to export");
+    return;
+  }
+
+  // Step 1: Convert JSON to worksheet
+  const worksheet = XLSX.utils.json_to_sheet(final_data);
+
+  // Step 2: Create a workbook and append the worksheet
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "OpenDN Data");
+
+  // Step 3: Trigger download
+  XLSX.writeFile(workbook, "OpenDnDataSheet.xlsx");
+};
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 p-6">
       <div className="max-w-7xl mx-auto">
@@ -742,6 +759,16 @@ const downloadIndividualSheet = (sheetType) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Download Complete Excel
+            </button>
+
+            <button
+              onClick={downloadOpenDnDataSheet}
+              className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-green-400 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download OpenDn Data Sheet
             </button>
             
             <button

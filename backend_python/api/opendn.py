@@ -1,6 +1,65 @@
 # worker_picker_kpi.py
 import pandas as pd
 import numpy as np
+import json
+from datetime import datetime
+
+def convert_to_json_serializable(df):
+    """
+    Convert DataFrame to JSON serializable format
+    - Replace NaN with None
+    - Convert timestamps to string format
+    - Convert time objects to string format
+    - Handle other non-serializable objects
+    """
+    # Make a copy to avoid modifying original
+    df_copy = df.copy()
+    
+    # Handle different data types column by column
+    for col in df_copy.columns:
+        if df_copy[col].dtype == 'datetime64[ns]' or pd.api.types.is_datetime64_any_dtype(df_copy[col]):
+            # Handle datetime conversion with proper null handling
+            df_copy[col] = df_copy[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+            # Replace NaT (Not a Time) with None for datetime columns
+            df_copy[col] = df_copy[col].where(pd.notnull(df_copy[col]), None)
+        elif df_copy[col].dtype == 'object':
+            # Check if the column contains time objects or other non-serializable types
+            def convert_value(val):
+                if pd.isna(val) or val is None:
+                    return None
+                elif hasattr(val, 'strftime'):  # datetime, date, time objects
+                    return val.strftime('%H:%M:%S') if hasattr(val, 'hour') else str(val)
+                elif isinstance(val, (np.integer, np.floating)):
+                    return val.item()  # Convert numpy types to Python types
+                elif isinstance(val, np.bool_):
+                    return bool(val)
+                else:
+                    return val
+            
+            df_copy[col] = df_copy[col].apply(convert_value)
+    
+    # Replace any remaining NaN with None for JSON serialization
+    df_copy = df_copy.where(pd.notnull(df_copy), None)
+    
+    # Convert to dictionary (records format for frontend)
+    records = df_copy.to_dict('records')
+    
+    # Final cleanup: recursively replace any remaining NaN values
+    def clean_record(obj):
+        if isinstance(obj, dict):
+            return {k: clean_record(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [clean_record(item) for item in obj]
+        elif pd.isna(obj) or (isinstance(obj, float) and np.isnan(obj)):
+            return None
+        elif isinstance(obj, (np.integer, np.floating)):
+            return obj.item()
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        else:
+            return obj
+    
+    return [clean_record(record) for record in records]
 
 def process_openDn_file(file_stream):
     try:
@@ -197,6 +256,7 @@ def process_openDn_file(file_stream):
 
         opendn_data['L_O_B'] = np.where(condition_dealer_hold, 'Dealer HOLD', opendn_data['L_O_B'])
         
+        # Store final_data before further processing
         final_data = opendn_data.copy()
 
         hold_values = [
@@ -287,12 +347,16 @@ def process_openDn_file(file_stream):
             h_d[lob][1] += row['HASH_QTY']
             h_d[lob][2] += row['DNVALUE']
 
+        # Convert final_data to JSON serializable format
+        final_data_json = convert_to_json_serializable(final_data)
+
         return {
             'success': True,
             'p_d': p_d,
             'f_d': f_d,
             'h_d': h_d,
-            'message': "final_data sent successfully"
+            'final_data': final_data_json,
+            'message': "Data processed and final_data sent successfully"
         }
         
     except Exception as e:

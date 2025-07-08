@@ -250,7 +250,7 @@ const OpenDn = () => {
       </div>
 
 
-      {data && <OpenDnPerformance p_d = {data?.p_d} f_d = {data?.f_d} h_d = {data?.h_d}/>}
+      {data && <OpenDnPerformance p_d = {data?.p_d} f_d = {data?.f_d} h_d = {data?.h_d} final_data={data?.final_data}/>}
 
     </div>
   );
